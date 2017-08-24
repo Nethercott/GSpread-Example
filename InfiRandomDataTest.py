@@ -11,13 +11,12 @@ client = gspread.authorize(creds)
 # Make sure you use the right name here.
 sheet = client.open("TemperatureSensing").sheet1
 
-def updatesheet():
-    temp1 = randint(0, 100)
-    temp2 = randint(0, 100)
+def updatesheet(temp1, temp2):
     values = [datetime.datetime.now(), temp1, temp2]
-
     sheet.append_row(values)
 
 while True:
-    updatesheet()
+    probe1 = randint(0, 100)
+    probe2 = randint(0, 100)
+    updatesheet(probe1, probe2)
     time.sleep(15)
