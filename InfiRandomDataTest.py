@@ -1,22 +1,18 @@
-import gspread, datetime, time
+import gspread, datetime, time, random
 from oauth2client.service_account import ServiceAccountCredentials
-from random import randint
 
-# use creds to create a client to interact with the Google Drive API
-scope = ['https://spreadsheets.google.com/feeds']
-creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name('client_secret.json', ['https://spreadsheets.google.com/feeds'])
 client = gspread.authorize(creds)
 
-# Find a workbook by name and open the first sheet
-# Make sure you use the right name here.
-sheet = client.open("TemperatureSensing").sheet1
+sheet = client.open("Temperature Sensing").sheet1
 
 def updatesheet(temp1, temp2):
     values = [datetime.datetime.now(), temp1, temp2]
     sheet.append_row(values)
 
 while True:
-    probe1 = randint(0, 100)
-    probe2 = randint(0, 100)
+    probe1 = random.randint(0, 100)
+    probe2 = random.randint(0, 100)
     updatesheet(probe1, probe2)
+    print("Published succesfully.")
     time.sleep(15)
